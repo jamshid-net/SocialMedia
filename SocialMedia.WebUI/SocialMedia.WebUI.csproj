@@ -19,4 +19,8 @@
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SocialMedia.Application\SocialMedia.Application.csproj" />
+  </ItemGroup>
+
 </Project>

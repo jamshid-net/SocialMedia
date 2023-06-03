@@ -8,8 +8,9 @@ public class CreatePostCommand : IRequest<Guid>
 public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand,Guid>
 {
     private readonly IApplicationDbContext _context;
-    public CreatePostCommandHandler(IApplicationDbContext context)
-           => _context = context;
+    private readonly ICurrentUserService _currentUserService;
+    public CreatePostCommandHandler(IApplicationDbContext context,ICurrentUserService currentUserService)
+           => (_context,_currentUserService) = (context,currentUserService);
     
     public async Task<Guid> Handle(CreatePostCommand request, CancellationToken cancellationToken)
     {
@@ -20,6 +21,7 @@ public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand,Guid>
             Content = request.Content,
             AuthorId = request.AuthorId,
             CreatedAt = DateTimeOffset.UtcNow,
+            CreatedBy = _currentUserService.UserName
         };
         await _context.Posts.AddAsync(entity, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);

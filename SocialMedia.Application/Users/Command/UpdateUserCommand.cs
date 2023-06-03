@@ -25,11 +25,12 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool>
     public async Task<bool> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         string password = await _hashStringService.GetHashStringAsync(request.Password);
-        var entity = await _context.Users.FindAsync(new object[] { request.Id }, cancellationToken);
-        if (entity == null)
-        {
+        var entity = await _context.Users
+            .FindAsync(new object[] { request.Id }, cancellationToken);
+        if (entity is null)
             throw new NotFoundException(nameof(User), request.Id);
-        }
+        
+        
         entity.FullName = request.FullName;
         entity.UserName = request.UserName;
         entity.Email = request.Email;

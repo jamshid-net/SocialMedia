@@ -14,10 +14,10 @@ public class GetByIdPostQueryHandler : IRequestHandler<GetByIdPostQuery, PostGet
     public async Task<PostGetDto> Handle(GetByIdPostQuery request, CancellationToken cancellationToken)
     {
         var entity =await _context.Posts.FindAsync(new object[] {request.PostId}, cancellationToken);
-        if(entity == null)
-        {
+        if(entity is null)
             throw new NotFoundException(nameof(Post), request.PostId);
-        }
+        
+        
         var result = _mapper.Map<PostGetDto>(entity);   
         return result;
 

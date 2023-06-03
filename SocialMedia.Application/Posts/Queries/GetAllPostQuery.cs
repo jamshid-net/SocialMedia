@@ -4,8 +4,18 @@ public class GetAllPostQuery:IRequest<IQueryable<PostGetDto>>
 }
 public class GetAllPostQueryHandler : IRequestHandler<GetAllPostQuery, IQueryable<PostGetDto>>
 {
-    public Task<IQueryable<PostGetDto>> Handle(GetAllPostQuery request, CancellationToken cancellationToken)
+    private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
+
+    public GetAllPostQueryHandler(IApplicationDbContext context, IMapper mapper)
+           => (_context, _mapper) = (context,mapper);
+    
+    
+    public async  Task<IQueryable<PostGetDto>> Handle(GetAllPostQuery request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var entities = _context.Posts as IQueryable<Post>;
+        var result =  _mapper.Map<IQueryable<PostGetDto>>(entities);
+        return await Task.FromResult(result);
+
     }
 }
