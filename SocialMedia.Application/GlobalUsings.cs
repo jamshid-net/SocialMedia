@@ -1,0 +1,13 @@
+﻿global using Microsoft.EntityFrameworkCore;
+global using SocialMedia.Domain.Entities;
+global using SocialMedia.Domain.IdentityEntites;
+global using SocialMedia.Application.Common.Interfaces;
+global using MediatR;
+global using System.Security.Cryptography;
+global using System.Text;
+global using Microsoft.Extensions.DependencyInjection;
+global using SocialMedia.Application.Common.Services;
+global using SocialMedia.Application.Common.Exceptions;
+global using AutoMapper;
+global using SocialMedia.Application.Common.Models;
+global using SocialMedia.Application.Common.Mappings;
