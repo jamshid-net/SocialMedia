@@ -9,7 +9,7 @@ public class CreateUserCommand : IRequest<Guid>
     public string ProfilePicture { get; init; }
     public string Password { get; init; }
     public DateOnly BirthDate { get; init; }
-    public Guid[] RoleIds { get; init; }
+    public Guid[]? RoleIds { get; init; }
 
 }
 
@@ -18,6 +18,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
     private readonly IApplicationDbContext _context;
 
     private readonly IHashStringService _hashStringService;
+   
     public CreateUserCommandHandler(IApplicationDbContext context, IHashStringService hashStringService)
            => (_context, _hashStringService) = (context, hashStringService);
 
@@ -37,13 +38,17 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
             CreatedBy = request.UserName
              
         };
-        foreach (Guid id in request.RoleIds)
+        if(request.RoleIds is not null)
         {
-            entity.Roles.Add(new Role()
+            foreach (Guid id in request.RoleIds)
             {
-                Id= id
-            });
+                entity.Roles.Add(new Role()
+                {
+                    Id = id
+                });
+            }
         }
+      
         await _context.Users.AddAsync(entity,cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 

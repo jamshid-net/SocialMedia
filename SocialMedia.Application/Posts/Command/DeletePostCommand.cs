@@ -13,11 +13,12 @@ public class DeletePostCommandHandler : IRequestHandler<DeletePostCommand, bool>
     
     public async Task<bool> Handle(DeletePostCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Posts.FindAsync(new object[] {request.PostId});
-        if(entity == null)
-        {
+        var entity = await _context.Posts
+            .FindAsync(new object[] {request.PostId},cancellationToken);
+        if(entity is null)
             throw new NotFoundException(nameof(Post),request.PostId);
-        }
+        
+        
         _context.Posts.Remove(entity);
         await _context.SaveChangesAsync(cancellationToken); 
         return true;

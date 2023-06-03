@@ -16,10 +16,10 @@ public class GetByIdQueryHandler : IRequestHandler<GetByIdUserQuery, UserGetDto>
     {
         var entity=await _context.Users.FindAsync(new object[] {request.UserId}, cancellationToken);
 
-        if (entity == null)
-        {
+        if (entity is null)
             throw new NotFoundException(nameof(User), request.UserId);
-        }
+        
+        
         var result = _mapper.Map<UserGetDto>(entity);   
         return result;
     }
