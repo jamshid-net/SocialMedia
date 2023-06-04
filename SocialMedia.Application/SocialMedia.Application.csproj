@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Validations\" />
+    <Folder Include="Validations\PermissionValidation\" />
+    <Folder Include="Validations\RoleValidation\" />
   </ItemGroup>
 
 </Project>

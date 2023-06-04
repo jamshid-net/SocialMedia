@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SocialMedia.Application.Validations.UserValidation;
-public class DeleteUserValidation
+﻿namespace SocialMedia.Application.Validations.UserValidation;
+public class DeleteUserValidation:AbstractValidator<DeleteUserCommand>
 {
+    public DeleteUserValidation()
+        => RuleFor(x=> x.UserId).NotNull().WithMessage("Id is reuqired for delete!");
 }
+

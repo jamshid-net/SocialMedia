@@ -1,6 +1,4 @@
-﻿
-
-namespace SocialMedia.Application;
+﻿namespace SocialMedia.Application;
 
 public static class ConfigureServices
 {

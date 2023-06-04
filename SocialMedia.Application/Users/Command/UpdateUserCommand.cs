@@ -4,11 +4,11 @@ namespace SocialMedia.Application.Users.Command;
 public class UpdateUserCommand : IRequest<bool>
 {
     public Guid Id { get; init; }
-    public string FullName { get; init; }
-    public string UserName { get; init; }
-    public string Email { get; init; }
-    public string ProfilePicture { get; init; }
-    public string Password { get; init; }
+    public string? FullName { get; init; }
+    public string? UserName { get; init; }
+    public string? Email { get; init; }
+    public string? ProfilePicture { get; init; }
+    public string? Password { get; init; }
     public DateOnly BirthDate { get; init; }
     public Guid[]? RoleIds { get; init; }
 
@@ -30,12 +30,19 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool>
         if (entity is null)
             throw new NotFoundException(nameof(User), request.Id);
         
-        entity.FullName = request.FullName;
-        entity.UserName = request.UserName;
-        entity.Email = request.Email;
-        entity.Password = password;
-        entity.ProfilePicture = request.ProfilePicture;
-        entity.BirthDate = request.BirthDate;
+
+        //command property if null, not sets value
+        var properties = typeof(UpdateUserCommand).GetProperties(); 
+        foreach (var property in properties)
+        {
+            var requestValue = property.GetValue(request);
+            if(requestValue is not null)
+            {
+                var entityProperty = entity.GetType().GetProperty(property.Name);
+                entityProperty.SetValue(entity, requestValue);
+            }
+        }
+
         entity.LastModified = DateTimeOffset.Now;
         entity.LastModifiedBy = request.UserName;
         if(request.RoleIds is not null)
