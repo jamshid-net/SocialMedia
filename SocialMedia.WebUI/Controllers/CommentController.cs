@@ -29,6 +29,6 @@ public class CommentController : ApiBaseController
         => Ok(await _mediatr.Send(new GetAllCommentQuery()));
 
     [HttpGet("getById")]
-    public async ValueTask<IActionResult> GetByIdComment([FromQuery]GetByIdCommentQuery command)
+    public async ValueTask<IActionResult> GetByIdComment([FromQuery] GetByIdCommentQuery command)
         => Ok(await _mediatr.Send(command));
 }
