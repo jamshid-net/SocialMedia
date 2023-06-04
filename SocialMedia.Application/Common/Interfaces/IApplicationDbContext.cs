@@ -8,7 +8,6 @@ public interface IApplicationDbContext
 
     public DbSet<Role> Roles { get; }
     public DbSet<Permission> Permissions { get; }
-
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
 

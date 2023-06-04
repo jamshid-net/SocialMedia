@@ -8,13 +8,10 @@ public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand,
 {
     private readonly IApplicationDbContext _context;
 
-
     private readonly ICurrentUserService _currentUserService;
 
     public UpdateCommentCommandHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
            => (_context, _currentUserService) = (context, currentUserService);
-
-
 
 
     public async Task<bool> Handle(UpdateCommentCommand request, CancellationToken cancellationToken)

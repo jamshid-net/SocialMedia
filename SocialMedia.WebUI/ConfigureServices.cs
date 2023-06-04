@@ -1,5 +1,12 @@
-﻿namespace SocialMedia.WebUI;
+﻿
+namespace SocialMedia.WebUI;
 
-public class ConfigureServices
+public static class ConfigureServices
 {
+    public static IServiceCollection AddWebUIService(this IServiceCollection services)
+    {
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+        return services;
+    }
 }

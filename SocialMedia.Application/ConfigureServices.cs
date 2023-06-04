@@ -1,5 +1,4 @@
 ﻿
-using System.Reflection;
 
 namespace SocialMedia.Application;
 
@@ -9,7 +8,7 @@ public static class ConfigureServices
     {
         services.AddScoped<IHashStringService, HashStringService>();
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
-       
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         return services;
     }
