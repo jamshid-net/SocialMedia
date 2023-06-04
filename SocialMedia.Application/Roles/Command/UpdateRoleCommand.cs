@@ -9,7 +9,6 @@ public class UpdateRoleCommand : IRequest<bool>
 public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, bool>
 {
     private readonly IApplicationDbContext _context;
-
     private readonly ICurrentUserService _currentUserService;
 
     public UpdateRoleCommandHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
@@ -36,7 +35,6 @@ public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, bool>
             }
             entity.Permissions = foundPermissions;
         }
-
 
         await _context.SaveChangesAsync(cancellationToken);
         return true;

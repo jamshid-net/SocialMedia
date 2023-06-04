@@ -13,8 +13,8 @@ public class GetAllPermissionQueryHandler:IRequestHandler<GetAllPermissionQuery,
 
     public Task<IQueryable<PermissionGetDto>> Handle(GetAllPermissionQuery request, CancellationToken cancellationToken)
     {
-         var entites = _context.Permissions as IQueryable<Permission>;
-         var result = _mapper.Map<IQueryable<PermissionGetDto>>(entites); 
+         var entites = _context.Permissions;
+         var result = _mapper.ProjectTo<PermissionGetDto>(entites); 
 
         return Task.FromResult(result);
     }

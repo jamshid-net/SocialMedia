@@ -26,7 +26,7 @@ public class UserController : ApiBaseController
         => Ok(await _mediatr.Send(new GetAllUsersQuery()));
 
     [HttpGet("getById")]
-    public async ValueTask<IActionResult> GetByIdUser([FromForm]GetByIdUserQuery command)
+    public async ValueTask<IActionResult> GetByIdUser([FromQuery] GetByIdUserQuery command)
         => Ok(await _mediatr.Send(command));    
 
 }

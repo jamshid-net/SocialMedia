@@ -1,3 +1,5 @@
+using SocialMedia.WebUI.Middlewares;
+
 namespace SocialMedia.WebUI;
 
 public class Program
@@ -21,7 +23,7 @@ public class Program
         }
 
         app.UseHttpsRedirection();
-
+        app.UseGlobalExceptionMiddleware();
         app.UseAuthorization();
         app.MapControllers();
 
