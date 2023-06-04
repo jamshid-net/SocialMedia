@@ -10,8 +10,4 @@
     <ProjectReference Include="..\SocialMedia.Application\SocialMedia.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Persistence\" />
-  </ItemGroup>
-
 </Project>

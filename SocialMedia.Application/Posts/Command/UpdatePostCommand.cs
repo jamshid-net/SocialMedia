@@ -34,7 +34,7 @@ public class UpdatePostCommandHandler : IRequestHandler<UpdatePostCommand, bool>
                 entityProperty.SetValue(entity, requestValue);
             }
         }
-       
+        
         entity.LastModified = DateTimeOffset.UtcNow;
         entity.LastModifiedBy = _currentUserService.UserName;
 

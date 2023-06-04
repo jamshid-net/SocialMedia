@@ -2,7 +2,7 @@
 public class UpdateCommentCommand:IRequest<bool>
 {
     public Guid CommentId { get; init; }
-    public string CommentText { get; init; }
+    public string? CommentText { get; init; }
 }
 public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand, bool>
 {
@@ -20,7 +20,7 @@ public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand,
             .FindAsync(new object[] { request.CommentId }, cancellationToken);
         if (entity is null)
             throw new NotFoundException(nameof(Comment), request.CommentId);
-        
+        entity.AuthorId = _currentUserService.UserId;
         entity.CommentText = request.CommentText;
         entity.LastModified =  DateTimeOffset.UtcNow;
         entity.LastModifiedBy = _currentUserService.UserName;

@@ -3,7 +3,7 @@ public class CreatePostCommand : IRequest<Guid>
 {
     public string Title { get; init; }
     public string Content { get; init; }
-    public Guid AuthorId { get; init; }
+   
 }
 public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand,Guid>
 {
@@ -19,10 +19,11 @@ public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand,Guid>
             Id = Guid.NewGuid(),
             Title = request.Title,
             Content = request.Content,
-            AuthorId = request.AuthorId,
+            AuthorId = _currentUserService.UserId,
             CreatedAt = DateTimeOffset.UtcNow,
             CreatedBy = _currentUserService.UserName
         };
+       
         await _context.Posts.AddAsync(entity, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
         return entity.Id;   

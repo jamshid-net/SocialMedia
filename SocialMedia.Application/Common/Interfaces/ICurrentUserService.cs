@@ -1,5 +1,6 @@
 ﻿namespace SocialMedia.Application.Common.Interfaces;
 public interface ICurrentUserService
 {
-    string? UserName { get; }
+    string? UserName { get;}
+    Guid? UserId { get;}
 }
