@@ -9,7 +9,7 @@ public class UpdateUserCommand : IRequest<bool>
     public string? Email { get; init; }
     public string? ProfilePicture { get; init; }
     public string? Password { get; init; }
-    public DateOnly BirthDate { get; init; }
+    public DateOnly? BirthDate { get; init; }
     public Guid[]? RoleIds { get; init; }
 
 }
@@ -24,7 +24,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool>
         
     public async Task<bool> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        string password = await _hashStringService.GetHashStringAsync(request.Password);
+       
         var entity = await _context.Users
             .FindAsync(new object[] { request.Id }, cancellationToken);
         if (entity is null)
@@ -32,15 +32,23 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool>
         
 
         //command property if null, not sets value
-        var properties = typeof(UpdateUserCommand).GetProperties(); 
+        var properties = typeof(UpdateUserCommand).GetProperties();
         foreach (var property in properties)
         {
+
             var requestValue = property.GetValue(request);
-            if(requestValue is not null)
+            if (requestValue is not null && (property.Name is not "RoleIds"))
             {
                 var entityProperty = entity.GetType().GetProperty(property.Name);
                 entityProperty.SetValue(entity, requestValue);
+                
             }
+
+            if (property.Name is "Password" && requestValue is not null)
+            {
+                entity.Password = await _hashStringService.GetHashStringAsync(request.Password);
+            }
+
         }
 
         entity.LastModified = DateTimeOffset.Now;

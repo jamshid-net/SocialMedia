@@ -13,8 +13,8 @@ public class GetAllPostQueryHandler : IRequestHandler<GetAllPostQuery, IQueryabl
     
     public async  Task<IQueryable<PostGetDto>> Handle(GetAllPostQuery request, CancellationToken cancellationToken)
     {
-        var entities = _context.Posts as IQueryable<Post>;
-        var result =  _mapper.Map<IQueryable<PostGetDto>>(entities);
+        var entities = _context.Posts;
+        var result =  _mapper.ProjectTo<PostGetDto>(entities);
         return await Task.FromResult(result);
 
     }

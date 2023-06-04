@@ -27,6 +27,6 @@ public class RoleController : ApiBaseController
         => Ok(await _mediatr.Send(new GetAllRoleQuery()));
 
     [HttpGet("getById")]
-    public async ValueTask<IActionResult> GetByIdRole([FromForm] GetByIdRoleQuery command)
+    public async ValueTask<IActionResult> GetByIdRole([FromQuery] GetByIdRoleQuery command)
         => Ok(await _mediatr.Send(command));
 }

@@ -11,8 +11,8 @@ public class GetAllCommentQueryHandler : IRequestHandler<GetAllCommentQuery, IQu
            => (_context, _mapper) = (context,mapper);   
     public async Task<IQueryable<CommentGetDto>> Handle(GetAllCommentQuery request, CancellationToken cancellationToken)
     {
-        var entities = _context.Comments as IQueryable<Comment>;
-        var result =  _mapper.Map<IQueryable<CommentGetDto>>(entities);    
+        var entities = _context.Comments;
+        var result =  _mapper.ProjectTo<CommentGetDto>(entities);    
         return await Task.FromResult(result);
     }
 }

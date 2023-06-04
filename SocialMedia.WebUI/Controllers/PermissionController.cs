@@ -26,7 +26,7 @@ public class PermissionController : ApiBaseController
         => Ok(await _mediatr.Send(new GetAllPermissionQuery()));
 
     [HttpGet("getById")]
-    public async ValueTask<IActionResult> GetByIdPermission([FromForm] GetByIdPermissionQuery command)
+    public async ValueTask<IActionResult> GetByIdPermission([FromQuery] GetByIdPermissionQuery command)
         => Ok(await _mediatr.Send(command));
 
 

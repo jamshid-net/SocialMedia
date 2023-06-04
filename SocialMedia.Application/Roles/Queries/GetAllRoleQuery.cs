@@ -10,8 +10,8 @@ public class GetAllRoleQueryHandler : IRequestHandler<GetAllRoleQuery, IQueryabl
           =>(_context,_mapper)=(context,mapper);    
     public async Task<IQueryable<RoleGetDto>> Handle(GetAllRoleQuery request, CancellationToken cancellationToken)
     {
-        var entities = _context.Roles as IQueryable<Role>; 
-        var result = _mapper.Map<IQueryable<RoleGetDto>>(entities);
+        var entities = _context.Roles; 
+        var result = _mapper.ProjectTo<RoleGetDto>(entities);
         return await Task.FromResult(result);
     }
 }
