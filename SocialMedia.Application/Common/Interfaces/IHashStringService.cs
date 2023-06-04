@@ -1,6 +1,4 @@
-﻿
-
-namespace SocialMedia.Application.Common.Interfaces;
+﻿namespace SocialMedia.Application.Common.Interfaces;
 
 public interface IHashStringService
 {

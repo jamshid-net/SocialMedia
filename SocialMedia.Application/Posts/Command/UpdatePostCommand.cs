@@ -22,11 +22,19 @@ public class UpdatePostCommandHandler : IRequestHandler<UpdatePostCommand, bool>
             .FindAsync(new object[] { request.PostId },cancellationToken);
         if (entity is null)
             throw new NotFoundException(nameof(Post), request.PostId);
-        
-        
-        entity.Id = Guid.NewGuid();
-        entity.Title = request.Title;
-        entity.Content = request.Content;
+       
+        //command property if null, not sets value
+        var properties = typeof(UpdatePostCommand).GetProperties();
+        foreach (var property in properties)
+        {
+            var requestValue = property.GetValue(request);
+            if (requestValue is not null)
+            {
+                var entityProperty = entity.GetType().GetProperty(property.Name);
+                entityProperty.SetValue(entity, requestValue);
+            }
+        }
+       
         entity.LastModified = DateTimeOffset.UtcNow;
         entity.LastModifiedBy = _currentUserService.UserName;
 

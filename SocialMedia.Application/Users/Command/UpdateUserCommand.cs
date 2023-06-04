@@ -10,7 +10,7 @@ public class UpdateUserCommand : IRequest<bool>
     public string ProfilePicture { get; init; }
     public string Password { get; init; }
     public DateOnly BirthDate { get; init; }
-    public Guid[] RoleIds { get; init; }
+    public Guid[]? RoleIds { get; init; }
 
 }
 
@@ -30,7 +30,6 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool>
         if (entity is null)
             throw new NotFoundException(nameof(User), request.Id);
         
-        
         entity.FullName = request.FullName;
         entity.UserName = request.UserName;
         entity.Email = request.Email;
@@ -39,15 +38,17 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool>
         entity.BirthDate = request.BirthDate;
         entity.LastModified = DateTimeOffset.Now;
         entity.LastModifiedBy = request.UserName;
-
-        foreach (Guid id in request.RoleIds)
+        if(request.RoleIds is not null)
         {
-            entity.Roles.Add(new Role()
+            foreach (Guid id in request.RoleIds)
             {
-                Id = id
-            });
+                entity.Roles.Add(new Role()
+                {
+                    Id = id
+                });
+            }
         }
-        
+       
         await _context.SaveChangesAsync(cancellationToken);
 
         return true;

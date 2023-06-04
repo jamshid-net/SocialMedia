@@ -11,3 +11,8 @@ global using SocialMedia.Application.Common.Exceptions;
 global using AutoMapper;
 global using SocialMedia.Application.Common.Models;
 global using SocialMedia.Application.Common.Mappings;
+global using System.Reflection;
+global using FluentValidation;
+global using SocialMedia.Application.Users.Command;
+global using FluentValidation.AspNetCore;
+global using SocialMedia.Application.Posts.Command;
