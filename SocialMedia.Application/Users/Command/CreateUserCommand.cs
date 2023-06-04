@@ -9,7 +9,7 @@ public class CreateUserCommand : IRequest<Guid>
     public string ProfilePicture { get; init; }
     public string Password { get; init; }
     public DateOnly BirthDate { get; init; }
-    public Guid[]? RoleIds { get; init; }
+    public List<Guid>? RoleIds { get; init; }
 
 }
 
@@ -40,13 +40,14 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
         };
         if(request.RoleIds is not null)
         {
-            foreach (Guid id in request.RoleIds)
+            List<Role> foundRoles = new();
+
+            foreach(var roleId in request.RoleIds)
             {
-                entity.Roles.Add(new Role()
-                {
-                    Id = id
-                });
+                var role = await _context.Roles.FindAsync(new object[] { roleId });
+                foundRoles.Add(role);
             }
+            entity.Roles = foundRoles;
         }
       
         await _context.Users.AddAsync(entity,cancellationToken);

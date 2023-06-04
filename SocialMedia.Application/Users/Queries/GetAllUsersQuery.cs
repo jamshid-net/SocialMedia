@@ -1,4 +1,6 @@
-﻿namespace SocialMedia.Application.Users.Queries;
+﻿
+
+namespace SocialMedia.Application.Users.Queries;
 public class GetAllUsersQuery:IRequest<IQueryable<UserGetDto>>
 {
 
@@ -13,8 +15,8 @@ public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, IQuerya
 
     public async Task<IQueryable<UserGetDto>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
     {
-        var entities = _context.Users.Include(x=> x.Roles);
-        var result = _mapper.Map<IQueryable<UserGetDto>>(entities);
+        var entities = _context.Users.Include(x => x.Roles);
+        var result = _mapper.ProjectTo<UserGetDto>(entities);
         return result;
     }
 }
