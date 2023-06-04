@@ -1,6 +1,7 @@
 ﻿namespace SocialMedia.Application;
 public static class ConfigureServices
 {
+    
     public static IServiceCollection AddApplicationService(this IServiceCollection services)
     {
         services.AddScoped<IHashStringService, HashStringService>();
@@ -11,7 +12,7 @@ public static class ConfigureServices
             option.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 
         });
-
+        
         return services;
     }
 }

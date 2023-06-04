@@ -25,6 +25,6 @@ public class PostController : ApiBaseController
         => Ok(await _mediatr.Send(new GetAllPostQuery()));
 
     [HttpGet("getById")]
-    public async ValueTask<IActionResult> GetByIdPost([FromForm] GetByIdPostQuery command)
+    public async ValueTask<IActionResult> GetByIdPost([FromQuery] GetByIdPostQuery command)
         => Ok(await _mediatr.Send(command));
 }
