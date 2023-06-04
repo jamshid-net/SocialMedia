@@ -6,3 +6,4 @@ global using System.Reflection;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.Extensions.DependencyInjection;
 global using SocialMedia.Infrastucture.Persistence;
+global using Microsoft.Extensions.Configuration;

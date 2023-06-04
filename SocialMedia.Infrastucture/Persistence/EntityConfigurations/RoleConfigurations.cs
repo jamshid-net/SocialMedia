@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SocialMedia.Infrastucture.Persistence.EntityConfigurations;
-public class RoleConfigurations
+﻿namespace SocialMedia.Infrastucture.Persistence.EntityConfigurations;
+public class RoleConfigurations : IEntityTypeConfiguration<Role>
 {
+    public void Configure(EntityTypeBuilder<Role> builder)
+    {
+        builder.HasKey(x => x.Id);
+    }
 }

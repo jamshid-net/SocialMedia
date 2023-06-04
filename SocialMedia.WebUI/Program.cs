@@ -5,10 +5,11 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
-
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        builder.Services.AddInfrastructureService(builder.Configuration);
+        builder.Services.AddApplicationService();
+        builder.Services.AddWebUIService();
         builder.Services.AddControllers();
-
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 

@@ -1,10 +1,8 @@
-﻿using SocialMedia.Domain.Common;
+﻿namespace SocialMedia.Domain.IdentityEntites;
 
-namespace SocialMedia.Domain.IdentityEntites
+public class Permission : BaseAuditableEntity
 {
-    public class Permission : BaseAuditableEntity
-    {
-        public string PermissionName { get; set; }
-        public virtual List<Role>? Roles { get; set; }
-    }
+    public string PermissionName { get; set; }
+    public virtual List<Role>? Roles { get; set; }
 }
+
