@@ -17,3 +17,4 @@ global using FluentValidation.AspNetCore;
 global using FluentValidation;
 global using MediatR;
 global using AutoMapper;
+global using Microsoft.EntityFrameworkCore.Query;

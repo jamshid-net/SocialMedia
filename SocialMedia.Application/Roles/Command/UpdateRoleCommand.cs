@@ -4,7 +4,7 @@ public class UpdateRoleCommand : IRequest<bool>
 {
     public Guid Id { get; set; }
     public string RoleName { get; init; }
-    public Guid[]? PermissionIds { get; init; }
+    public List<Guid>? PermissionsIds { get; init; }
 }
 public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, bool>
 {
@@ -17,6 +17,7 @@ public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, bool>
 
     public async Task<bool> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)
     {
+        
         var entity = await _context.Roles
             .FindAsync(new object[] { request.Id }, cancellationToken);
         if (entity is null)
@@ -25,17 +26,18 @@ public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, bool>
         entity.RoleName = request.RoleName;
         entity.LastModified = DateTimeOffset.UtcNow;
         entity.LastModifiedBy = _currentUserService.UserName;
-        
-        if (request.PermissionIds is not null)
+        if (request.PermissionsIds is not null)
         {
-            foreach (Guid permissionId in request.PermissionIds)
+            List<Permission> foundPermissions = new();
+            foreach (var item in request.PermissionsIds)
             {
-                entity.Permissions.Add(new Permission
-                {
-                    Id = permissionId
-                });
+                var permisson = await _context.Permissions.FindAsync(new object[] { item });
+                foundPermissions.Add(permisson);
             }
+            entity.Permissions = foundPermissions;
         }
+
+
         await _context.SaveChangesAsync(cancellationToken);
         return true;
     }

@@ -9,4 +9,5 @@ public class UserGetDto
     public string ProfilePicture { get; set; } 
     public Guid[]? RolesIds { get; set; }
     public DateOnly BirthDate { get; set; } 
+    public List<Role> Roles { get; set; }
 }
