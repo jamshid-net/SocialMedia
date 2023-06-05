@@ -1,11 +1,11 @@
 ﻿
 
 namespace SocialMedia.Application.Users.Queries;
-public class GetAllUsersQuery:IRequest<IQueryable<UserGetDto>>
+public class GetAllUsersQuery:IRequest<List<UserGetDto>>
 {
 
 }
-public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, IQueryable<UserGetDto>>
+public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, List<UserGetDto>>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -13,10 +13,10 @@ public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, IQuerya
     public GetAllUsersQueryHandler(IApplicationDbContext context, IMapper mapper)
      => (_context, _mapper) = (context, mapper);
 
-    public async Task<IQueryable<UserGetDto>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+    public async Task<List<UserGetDto>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
     {
-        var entities = _context.Users.Include(x => x.Roles);
-        var result = _mapper.ProjectTo<UserGetDto>(entities);
+        var entities =await _context.Users.ToListAsync(cancellationToken);
+        var result = _mapper.Map<List<UserGetDto>>(entities);
         return result;
     }
 }

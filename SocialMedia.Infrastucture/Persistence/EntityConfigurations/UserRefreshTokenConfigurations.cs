@@ -5,6 +5,6 @@ public class UserRefreshTokenConfigurations : IEntityTypeConfiguration<UserRefre
     public void Configure(EntityTypeBuilder<UserRefreshToken> builder)
     {
         builder.HasKey(x => x.Id);
-
+       
     }
 }

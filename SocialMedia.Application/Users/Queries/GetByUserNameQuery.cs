@@ -22,7 +22,6 @@ public class GetByUserNameQueryHandler : IRequestHandler<GetByUserNameQuery, Use
         if (entity is null)
             throw new NotFoundException(nameof(User), request.UserName);
 
-
         var result = _mapper.Map<UserGetDto>(entity);
         return result;
     }

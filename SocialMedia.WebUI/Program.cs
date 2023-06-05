@@ -1,5 +1,3 @@
-using SocialMedia.WebUI.Middlewares;
-
 namespace SocialMedia.WebUI;
 
 public class Program
@@ -15,16 +13,23 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddLazyCache();
+        
         var app = builder.Build();
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(c =>
+            {
+                c.DisplayRequestDuration();
+            });
         }
-
         app.UseHttpsRedirection();
         app.UseGlobalExceptionMiddleware();
         app.UseAuthorization();
+
+        app.UseResponseCaching();
+        
         app.MapControllers();
 
         app.Run();

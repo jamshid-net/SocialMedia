@@ -16,6 +16,7 @@ public class GetByIdPermissionQueryHandler : IRequestHandler<GetByIdPermissionQu
         var entity = await _context.Permissions.FindAsync(new object[] { request.Id },cancellationToken);
         if(entity is null)
             throw new NotFoundException(nameof(Permission),request.Id);
+        
         var result = _mapper.Map<PermissionGetDto>(entity);
         return result;
     }

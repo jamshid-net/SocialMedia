@@ -33,14 +33,15 @@ public class JwtTokenService : IJwtTokenService
         }
 
         int minute = 5;
-        if(int.TryParse(_configuration.GetRequiredSection("JWT:ExpiresInMinutes").Value,out int _minute){
+        if(int.TryParse(_configuration.GetRequiredSection("JWT:ExpiresInMinutes").Value,out int _minute)){
             minute = _minute;
         }
         JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(
-            
+            issuer:_configuration.GetRequiredSection("").Value
 
 
             );
+        return new TokenResponse();
 
     }
 
