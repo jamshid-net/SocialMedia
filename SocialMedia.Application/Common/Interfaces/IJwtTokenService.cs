@@ -1,8 +1,4 @@
 ﻿
-
-using SocialMedia.Application.Users.Login;
-using System.Security.Claims;
-
 namespace SocialMedia.Application.Common.Interfaces;
 public interface IJwtTokenService
 {

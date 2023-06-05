@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMedia.WebUI", "SocialMedia.WebUI\SocialMedia.WebUI.csproj", "{1F422FB2-BC29-4814-84A9-C7AE233C3C91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMedia.WebUI", "SocialMedia.WebUI\SocialMedia.WebUI.csproj", "{1F422FB2-BC29-4814-84A9-C7AE233C3C91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMedia.Domain", "SocialMedia.Domain\SocialMedia.Domain.csproj", "{27938299-DCC8-421A-9964-F9E2B5CFA255}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMedia.Domain", "SocialMedia.Domain\SocialMedia.Domain.csproj", "{27938299-DCC8-421A-9964-F9E2B5CFA255}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMedia.Application", "SocialMedia.Application\SocialMedia.Application.csproj", "{071F3CB7-50E9-4CC2-9A96-EA8B80420F66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMedia.Application", "SocialMedia.Application\SocialMedia.Application.csproj", "{071F3CB7-50E9-4CC2-9A96-EA8B80420F66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMedia.Infrastucture", "SocialMedia.Infrastucture\SocialMedia.Infrastucture.csproj", "{DD6C4CBF-0C0F-4BBC-B41F-45C854DBB709}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMedia.Infrastucture", "SocialMedia.Infrastucture\SocialMedia.Infrastucture.csproj", "{DD6C4CBF-0C0F-4BBC-B41F-45C854DBB709}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3BC97755-79E7-4202-B508-0DC348FE158D}"
+	ProjectSection(SolutionItems) = preProject
+		CodeComments.md = CodeComments.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

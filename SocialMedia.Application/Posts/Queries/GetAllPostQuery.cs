@@ -1,8 +1,8 @@
 ﻿namespace SocialMedia.Application.Posts.Queries;
-public class GetAllPostQuery:IRequest<IQueryable<PostGetDto>>
+public class GetAllPostQuery:IRequest<List<PostGetDto>>
 {
 }
-public class GetAllPostQueryHandler : IRequestHandler<GetAllPostQuery, IQueryable<PostGetDto>>
+public class GetAllPostQueryHandler : IRequestHandler<GetAllPostQuery, List<PostGetDto>>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -11,11 +11,11 @@ public class GetAllPostQueryHandler : IRequestHandler<GetAllPostQuery, IQueryabl
            => (_context, _mapper) = (context,mapper);
     
     
-    public async  Task<IQueryable<PostGetDto>> Handle(GetAllPostQuery request, CancellationToken cancellationToken)
+    public async  Task<List<PostGetDto>> Handle(GetAllPostQuery request, CancellationToken cancellationToken)
     {
-        var entities = _context.Posts;
-        var result =  _mapper.ProjectTo<PostGetDto>(entities);
-        return await Task.FromResult(result);
+        var entities =await _context.Posts.ToListAsync(cancellationToken);
+        var result =  _mapper.Map<List<PostGetDto>>(entities);
+        return result;
 
     }
 }

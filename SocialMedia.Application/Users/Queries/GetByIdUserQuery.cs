@@ -14,7 +14,8 @@ public class GetByIdQueryHandler : IRequestHandler<GetByIdUserQuery, UserGetDto>
 
     public async Task<UserGetDto> Handle(GetByIdUserQuery request, CancellationToken cancellationToken)
     {
-        var entity=await _context.Users.FindAsync(new object[] {request.UserId}, cancellationToken);
+        var entity= await _context.Users.FindAsync(new object[] { request.UserId });    
+           
 
         if (entity is null)
             throw new NotFoundException(nameof(User), request.UserId);

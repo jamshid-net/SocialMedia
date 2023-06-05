@@ -1,11 +1,4 @@
 ﻿
-
-
-
-
-using System.Security;
-using System.Text;
-
 namespace SocialMedia.Application.Common.JwtSettings;
 public static class JwtTokenSettings
 {

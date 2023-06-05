@@ -8,6 +8,7 @@ public static class ConfigureServices
         
         services.AddDbContext<ApplicationDbContext>(options =>
         {
+            options.UseLazyLoadingProxies();
             options.UseNpgsql(configuration.GetConnectionString("DbConnection"));
         });
         services.AddScoped<IApplicationDbContext>

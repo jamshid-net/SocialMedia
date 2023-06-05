@@ -8,11 +8,11 @@ public class User : BaseAuditableEntity
     public string ProfilePicture { get; set; }
     public string Password { get; set; }
     public DateOnly BirthDate { get; set; }
-    public List<Post>? Posts { get; set; }
+    public virtual List<Post>? Posts { get; set; }
     [JsonIgnore]
-    public List<Comment>? Comments { get; set; }
+    public virtual List<Comment>? Comments { get; set; }
     [JsonIgnore]
-    public List<Role>? Roles { get; set; }
+    public virtual List<Role>? Roles { get; set; }
 
 }
 

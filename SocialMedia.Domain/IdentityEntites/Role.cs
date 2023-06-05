@@ -6,6 +6,6 @@ public class Role : BaseAuditableEntity
     [JsonIgnore]
     public virtual List<Permission> Permissions { get; set; }
     [JsonIgnore]
-    public List<User>? UserRoles { get; set; }
+    public virtual List<User>? UserRoles { get; set; }
 }
 
