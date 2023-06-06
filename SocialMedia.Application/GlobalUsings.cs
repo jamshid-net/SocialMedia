@@ -25,3 +25,4 @@ global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using System.Security;
 global using SocialMedia.Application.Users.Login;
 global using System.Security.Claims;
+global using Microsoft.Extensions.Caching.Distributed;

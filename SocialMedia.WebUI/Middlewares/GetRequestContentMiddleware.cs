@@ -25,8 +25,6 @@ public class GetRequestContentMiddleware
             await _mediatr.Publish(new PostNotification { CreatePostCommand =createPostCommand});
 
 
-          
-
         }
         await _next(httpContext);
     }

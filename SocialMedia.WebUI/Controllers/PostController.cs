@@ -3,7 +3,7 @@
 [ApiController]
 public class PostController : ApiBaseController
 {   
-    [RemoveLazyCache]
+   // [RemoveLazyCache]
     [HttpPost("create")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async ValueTask<IActionResult> CreatePost([FromForm] CreatePostCommand command)

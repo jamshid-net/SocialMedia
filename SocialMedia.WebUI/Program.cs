@@ -1,4 +1,6 @@
 
+using SocialMedia.WebUI.Middlewares;
+
 namespace SocialMedia.WebUI;
 
 public class Program
@@ -13,7 +15,11 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        
+        //builder.Services.AddStackExchangeRedisCache(options =>
+        //{
+            
+        //    options.Configuration = builder.Configuration.GetConnectionString("RedisDB");
+        //});
         builder.Services.AddLazyCache();
         
         var app = builder.Build();

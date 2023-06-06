@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SocialMedia.Infrastucture.Persistence.Migrations
+namespace SocialMedia.Infrastucture.Migrations
 {
     /// <inheritdoc />
-    public partial class Init1 : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,7 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    PermissionName = table.Column<string>(type: "text", nullable: false),
+                    PermissionName = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     LastModified = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
@@ -41,6 +41,20 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRefreshToken",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    RefreshToken = table.Column<string>(type: "text", nullable: false),
+                    UserName = table.Column<string>(type: "text", nullable: false),
+                    ExpiresTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRefreshToken", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -143,6 +157,7 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                     CommentText = table.Column<string>(type: "text", nullable: false),
                     AuthorId = table.Column<Guid>(type: "uuid", nullable: true),
                     PostId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CommentId = table.Column<Guid>(type: "uuid", nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     LastModified = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
@@ -151,6 +166,11 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Comments_Posts_PostId",
                         column: x => x.PostId,
@@ -167,6 +187,11 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                 name: "IX_Comments_AuthorId",
                 table: "Comments",
                 column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_CommentId",
+                table: "Comments",
+                column: "CommentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostId",
@@ -212,6 +237,9 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "RoleUser");
+
+            migrationBuilder.DropTable(
+                name: "UserRefreshToken");
 
             migrationBuilder.DropTable(
                 name: "Posts");

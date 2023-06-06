@@ -2,22 +2,28 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SocialMedia.Infrastucture.Persistence;
 
 #nullable disable
 
-namespace SocialMedia.Infrastucture.Persistence.Migrations
+namespace SocialMedia.Infrastucture.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230606191714_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -61,6 +67,9 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                     b.Property<Guid?>("AuthorId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("CommentId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("CommentText")
                         .IsRequired()
                         .HasColumnType("text");
@@ -83,6 +92,8 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("CommentId");
 
                     b.HasIndex("PostId");
 
@@ -196,7 +207,6 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PermissionName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -229,6 +239,28 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("SocialMedia.Domain.Token.UserRefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("ExpiresTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserRefreshToken");
                 });
 
             modelBuilder.Entity("PermissionRole", b =>
@@ -267,8 +299,12 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("AuthorId");
 
+                    b.HasOne("SocialMedia.Domain.Entities.Comment", null)
+                        .WithMany("InnerComments")
+                        .HasForeignKey("CommentId");
+
                     b.HasOne("SocialMedia.Domain.Entities.Post", "Post")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("PostId");
 
                     b.Navigation("Author");
@@ -285,9 +321,9 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("SocialMedia.Domain.Entities.Post", b =>
+            modelBuilder.Entity("SocialMedia.Domain.Entities.Comment", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("InnerComments");
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.User", b =>

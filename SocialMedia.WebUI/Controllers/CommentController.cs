@@ -3,7 +3,14 @@
 [ApiController]
 public class CommentController : ApiBaseController
 {
-    [RemoveLazyCache]
+
+    [HttpPatch("reply")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async ValueTask<IActionFilter> ReplyComment([FromForm] ReplyMessageCommentCommand command)
+         => (IActionFilter)Ok(await _mediatr.Send(command));
+
+
+ //   [RemoveLazyCache]
     [HttpPost("create")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async ValueTask<IActionResult> CreateComment([FromForm] CreateCommentCommand command)
@@ -24,8 +31,8 @@ public class CommentController : ApiBaseController
     public async ValueTask<IActionResult> UpdateComment([FromForm] UpdateCommentCommand command)
         => Ok(await _mediatr.Send(command));
 
-    
-    [AddLazyCache]
+   
+    //[AddLazyCache]
     [HttpGet("getall")]
     public async ValueTask<IActionResult> GetAllComment()
         => Ok(await _mediatr.Send(new GetAllCommentQuery()));
@@ -34,4 +41,6 @@ public class CommentController : ApiBaseController
     [HttpGet("getById")]
     public async ValueTask<IActionResult> GetByIdComment([FromQuery] GetByIdCommentQuery command)
         => Ok(await _mediatr.Send(command));
+
+
 }
