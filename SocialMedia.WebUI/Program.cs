@@ -28,8 +28,8 @@ public class Program
         app.UseHttpsRedirection();
         app.UseGlobalExceptionMiddleware();
         app.UseAuthorization();
-        app.UseResponseLoggerMiddleware();
-        
+        //app.UseResponseLoggerMiddleware();
+        app.UseGetRequestContentMiddleware();
         app.UseResponseCaching();
         
         app.MapControllers();

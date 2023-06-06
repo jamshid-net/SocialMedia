@@ -1,8 +1,8 @@
 ﻿namespace SocialMedia.Application.Posts.Command;
 public class CreatePostCommand : IRequest<Guid>
 {
-    public string Title { get; init; }
-    public string Content { get; init; }
+    public string? Title { get; init; }
+    public string? Content { get; init; }
    
 }
 public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand,Guid>
