@@ -35,8 +35,8 @@ public class ResponseLoggerMiddleware
                 responseCaptureStream.Seek(0, SeekOrigin.Begin);
                 var responseContent = await new StreamReader(responseCaptureStream).ReadToEndAsync();
 
-
                 _logger.LogCritical("Response: {StatusCode} - {ResponseContent}", context.Response.StatusCode, responseContent);
+               // await _mediator.Publish(new PostNotification() { Content = responseContent});
 
 
                 responseCaptureStream.Seek(0, SeekOrigin.Begin);

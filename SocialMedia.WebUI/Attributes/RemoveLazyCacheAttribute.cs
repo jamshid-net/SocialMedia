@@ -9,7 +9,24 @@ public class RemoveLazyCacheAttribute : ActionFilterAttribute
     {
         _configuration = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
         _cache = context.HttpContext.RequestServices.GetRequiredService<IAppCache>();
-        key = _configuration.GetValue<string>("LazyCache:Key");
+
+
+        if (context.HttpContext.Request.Path == "/api/User/getall")
+            key = _configuration.GetValue<string>("LazyCache:UserKey");
+
+        if (context.HttpContext.Request.Path == "/api/Role/getall")
+            key = _configuration.GetValue<string>("LazyCache:RoleKey");
+
+        if (context.HttpContext.Request.Path == "/api/Comment/getall")
+            key = _configuration.GetValue<string>("LazyCache:CommentKey");
+
+        if (context.HttpContext.Request.Path == "/api/Post/getall")
+            key = _configuration.GetValue<string>("LazyCache:PostKey");
+
+        if (context.HttpContext.Request.Path == "/api/Permission/getall")
+            key = _configuration.GetValue<string>("LazyCache:PermissionKey");
+
+        
         _cache.Remove(key);
         await next();
 
