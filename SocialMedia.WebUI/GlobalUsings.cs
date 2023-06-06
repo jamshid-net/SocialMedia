@@ -24,4 +24,6 @@ global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Mvc.Filters;
 global using SocialMedia.WebUI.Attributes;
 global using SocialMedia.WebUI.Middlewares;
+global using Microsoft.Extensions.Configuration;
+global using SocialMedia.Application.Common.Notifications;
 
