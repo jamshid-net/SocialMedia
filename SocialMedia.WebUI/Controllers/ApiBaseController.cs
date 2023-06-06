@@ -11,11 +11,4 @@ public class ApiBaseController : Controller
     protected IMediator _mediatr 
         => HttpContext.RequestServices.GetRequiredService<IMediator>();
     
-    protected IAppCache _appcache 
-        => HttpContext.RequestServices.GetRequiredService<IAppCache>();  
-
-
-
-
-
 }

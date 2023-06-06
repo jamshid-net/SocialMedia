@@ -1,3 +1,4 @@
+
 namespace SocialMedia.WebUI;
 
 public class Program
@@ -12,7 +13,7 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
+        
         builder.Services.AddLazyCache();
         
         var app = builder.Build();
@@ -27,7 +28,8 @@ public class Program
         app.UseHttpsRedirection();
         app.UseGlobalExceptionMiddleware();
         app.UseAuthorization();
-
+        app.UseResponseLoggerMiddleware();
+        
         app.UseResponseCaching();
         
         app.MapControllers();

@@ -5,7 +5,6 @@ public static class ConfigureServices
     public static IServiceCollection AddInfrastructureService(this IServiceCollection services,IConfiguration configuration)
     {
 
-        
         services.AddDbContext<ApplicationDbContext>(options =>
         {
             options.UseLazyLoadingProxies();
