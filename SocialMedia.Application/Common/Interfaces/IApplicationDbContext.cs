@@ -1,4 +1,6 @@
-﻿namespace SocialMedia.Application.Common.Interfaces;
+﻿
+
+namespace SocialMedia.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
@@ -8,6 +10,8 @@ public interface IApplicationDbContext
 
     public DbSet<Role> Roles { get; }
     public DbSet<Permission> Permissions { get; }
+
+    public DbSet<UserRefreshToken> UserRefreshTokens { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
 

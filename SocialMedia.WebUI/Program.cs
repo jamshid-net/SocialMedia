@@ -1,4 +1,8 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using SocialMedia.Application.Common.JwtSettings;
+using SocialMedia.WebUI.Middlewares;
+
 namespace SocialMedia.WebUI;
 
 public class Program
@@ -13,10 +17,13 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtSetting(builder.Configuration);
+       
         builder.Services.AddLazyCache();
         
         var app = builder.Build();
+        app.UseRateLimiter();
+
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -28,9 +35,10 @@ public class Program
         app.UseHttpsRedirection();
         app.UseGlobalExceptionMiddleware();
         app.UseAuthorization();
-        //app.UseResponseLoggerMiddleware();
+        
         app.UseGetRequestContentMiddleware();
         app.UseResponseCaching();
+        app.UseEtagMidlleware();
         
         app.MapControllers();
 

@@ -1,8 +1,17 @@
-﻿namespace SocialMedia.WebUI.Controllers;
+﻿
+
+namespace SocialMedia.WebUI.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class CommentController : ApiBaseController
 {
+
+    [HttpPost("reply")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async ValueTask<IActionResult> ReplyComment([FromForm] ReplyMessageCommentCommand command)
+         => Ok(await _mediatr.Send(command));
+
+
     [RemoveLazyCache]
     [HttpPost("create")]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -24,8 +33,10 @@ public class CommentController : ApiBaseController
     public async ValueTask<IActionResult> UpdateComment([FromForm] UpdateCommentCommand command)
         => Ok(await _mediatr.Send(command));
 
+    [Authorize]   
     
     [AddLazyCache]
+    //[DisableRateLimiting]
     [HttpGet("getall")]
     public async ValueTask<IActionResult> GetAllComment()
         => Ok(await _mediatr.Send(new GetAllCommentQuery()));
@@ -34,4 +45,6 @@ public class CommentController : ApiBaseController
     [HttpGet("getById")]
     public async ValueTask<IActionResult> GetByIdComment([FromQuery] GetByIdCommentQuery command)
         => Ok(await _mediatr.Send(command));
+
+
 }

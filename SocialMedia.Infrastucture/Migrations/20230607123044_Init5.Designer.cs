@@ -9,11 +9,11 @@ using SocialMedia.Infrastucture.Persistence;
 
 #nullable disable
 
-namespace SocialMedia.Infrastucture.Persistence.Migrations
+namespace SocialMedia.Infrastucture.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230604083539_Init1")]
-    partial class Init1
+    [Migration("20230607123044_Init5")]
+    partial class Init5
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,9 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -83,11 +86,16 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                     b.Property<Guid?>("PostId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("ReplyCommnetId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("PostId");
+
+                    b.HasIndex("ReplyCommnetId");
 
                     b.ToTable("Comments");
                 });
@@ -199,7 +207,6 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PermissionName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -232,6 +239,28 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("SocialMedia.Domain.Token.UserRefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("ExpiresTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserRefreshTokens");
                 });
 
             modelBuilder.Entity("PermissionRole", b =>
@@ -271,12 +300,18 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                         .HasForeignKey("AuthorId");
 
                     b.HasOne("SocialMedia.Domain.Entities.Post", "Post")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("PostId");
+
+                    b.HasOne("SocialMedia.Domain.Entities.Comment", "ReplyCommnet")
+                        .WithMany()
+                        .HasForeignKey("ReplyCommnetId");
 
                     b.Navigation("Author");
 
                     b.Navigation("Post");
+
+                    b.Navigation("ReplyCommnet");
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.Post", b =>
@@ -286,11 +321,6 @@ namespace SocialMedia.Infrastucture.Persistence.Migrations
                         .HasForeignKey("AuthorId");
 
                     b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("SocialMedia.Domain.Entities.Post", b =>
-                {
-                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.User", b =>

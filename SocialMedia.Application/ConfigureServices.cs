@@ -14,7 +14,8 @@ public static class ConfigureServices
        
 
         });
-        
+        services.AddScoped<IUserRefreshTokenService, UserRefreshTokenService>();
+        services.AddScoped<IJwtTokenService, JwtTokenService>();
         return services;
     }
 }

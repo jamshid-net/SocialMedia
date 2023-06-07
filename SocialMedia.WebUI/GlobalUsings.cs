@@ -26,4 +26,14 @@ global using SocialMedia.WebUI.Attributes;
 global using SocialMedia.WebUI.Middlewares;
 global using Microsoft.Extensions.Configuration;
 global using SocialMedia.Application.Common.Notifications;
-
+global using Microsoft.Extensions.Caching.Distributed;
+global using Newtonsoft.Json;
+global using System.Text;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.WebUtilities;
+global using Microsoft.Net.Http.Headers;
+global using System.Security.Cryptography;
+global using System.Threading.Tasks;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.RateLimiting;
+global using System.Threading.RateLimiting;
