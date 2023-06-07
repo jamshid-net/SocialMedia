@@ -37,3 +37,7 @@ global using System.Threading.Tasks;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.RateLimiting;
 global using System.Threading.RateLimiting;
+global using SocialMedia.Application.Users.Login;
+global using Serilog;
+global using Serilog.Events;
+global using TelegramSink;

@@ -29,3 +29,4 @@ global using Microsoft.Extensions.Caching.Distributed;
 global using SocialMedia.Application.Users.Queries;
 global using System.IdentityModel.Tokens.Jwt;
 global using SocialMedia.Domain.Token;
+global using Serilog;

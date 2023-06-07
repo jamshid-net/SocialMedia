@@ -1,14 +1,9 @@
-﻿
+﻿namespace SocialMedia.WebUI.Services;
 
-
-namespace SocialMedia.WebUI;
-
-public static class ConfigureServices
+public static class RateLimiterService
 {
-    public static IServiceCollection AddWebUIService(this IServiceCollection services)
+    public IServiceCollection AddRateLimiterService(this IServiceCollection services)
     {
-        services.AddScoped<ICurrentUserService, CurrentUserService>();
-        services.AddHttpContextAccessor();
         services.AddRateLimiter(options =>
         {
             options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
@@ -30,7 +25,6 @@ public static class ConfigureServices
                 //    QueueProcessingOrder = QueueProcessingOrder.OldestFirst
                 //};
 
-
             });
             options.OnRejected = async (context, token) =>
             {
@@ -38,6 +32,7 @@ public static class ConfigureServices
                 await context.HttpContext.Response.WriteAsync("Too many requests. Please try later again... ", cancellationToken: token);
             };
         });
+
         return services;
     }
 }

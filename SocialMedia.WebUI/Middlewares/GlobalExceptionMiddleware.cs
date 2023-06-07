@@ -1,13 +1,14 @@
 ﻿
 
+
 namespace SocialMedia.WebUI.Middlewares;
 
 public class GlobalExceptionMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly ILogger<GlobalExceptionMiddleware> _logger;
-    public GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger)
-           => (_next, _logger) = (next, logger);
+   
+    public GlobalExceptionMiddleware(RequestDelegate next)
+           => (_next) = (next);
        
     
 
@@ -33,8 +34,8 @@ public class GlobalExceptionMiddleware
 
     public async ValueTask<ActionResult> HandleException(HttpContext httpContext, string exMessage, HttpStatusCode httpStatusCode, string message)
     {
-        _logger.LogCritical(message);
-        // Log.Error("EXCEPTION:🔴 CLIENT_IP:{ClientIp}  CLIENT:{EnvironmentUserName} AGENT:{ClientAgent}" + $"\nDatetime:{DateTime.Now} | Message:{exMessage} | Path:{httpContext.Request.Path}");
+        
+        Log.Error("EXCEPTION:🔴 CLIENT_IP:{ClientIp}  CLIENT:{EnvironmentUserName}  MACHINENAME:{MachineName } AGENT:{ClientAgent}" + $"\nDatetime:{DateTime.Now} | Message:{exMessage} | Path:{httpContext.Request.Path}");
         HttpResponse response = httpContext.Response;
         response.ContentType = "application/json";
         response.StatusCode = (int)httpStatusCode;
