@@ -33,10 +33,9 @@ public class CommentController : ApiBaseController
     public async ValueTask<IActionResult> UpdateComment([FromForm] UpdateCommentCommand command)
         => Ok(await _mediatr.Send(command));
 
-    [Authorize]   
-    
+    [Authorize]
+    [EnableRateLimiting("Api")]
     [AddLazyCache]
-    //[DisableRateLimiting]
     [HttpGet("getall")]
     public async ValueTask<IActionResult> GetAllComment()
         => Ok(await _mediatr.Send(new GetAllCommentQuery()));

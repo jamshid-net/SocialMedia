@@ -14,9 +14,14 @@ public class GlobalExceptionMiddleware
 
     public async Task Invoke(HttpContext httpContext)
     {
+        
+           
         try
         {
+           
             await _next(httpContext);
+            
+
         }
         catch (NotFoundException ex)
         {

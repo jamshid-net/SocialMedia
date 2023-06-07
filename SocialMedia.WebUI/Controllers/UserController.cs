@@ -30,9 +30,11 @@ public class UserController : ApiBaseController
 
 
 
-    [EnableRateLimiting("Api")]
+   
     [AddLazyCache]
     [HttpGet("getall")]
+    [EnableRateLimiting("SlidingLimiter")]
+  
     public async ValueTask<IActionResult> GetAllUser()
         => Ok(await _mediatr.Send(new GetAllUsersQuery()));
 
