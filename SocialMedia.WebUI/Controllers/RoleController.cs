@@ -23,6 +23,8 @@ public class RoleController : ApiBaseController
     public async ValueTask<IActionResult> UpdateRole([FromForm] UpdateRoleCommand command)
         => Ok(await _mediatr.Send(command));
 
+
+    [EnableRateLimiting("Api")]
     [AddLazyCache]
     [HttpGet("getall")]
     public async ValueTask<IActionResult> GetAllRole()

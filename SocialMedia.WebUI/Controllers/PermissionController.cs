@@ -19,12 +19,15 @@ public class PermissionController : ApiBaseController
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async ValueTask<IActionResult> UpdatePermission([FromForm] UpdatePermissionCommand command)
         => Ok(await _mediatr.Send(command));
-
+    
+    
+    [EnableRateLimiting("Api")]
     [AddLazyCache]
     [HttpGet("getall")]
     public async ValueTask<IActionResult> GetAllPermission()
         => Ok(await _mediatr.Send(new GetAllPermissionQuery()));
 
+    
     [HttpGet("getById")]
     public async ValueTask<IActionResult> GetByIdPermission([FromQuery] GetByIdPermissionQuery command)
         => Ok(await _mediatr.Send(command));

@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Serilog;
 using SocialMedia.Application.Common.JwtSettings;
 using SocialMedia.WebUI.Middlewares;
 
@@ -10,15 +11,17 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        SerilogService.SerilogSettings(builder.Configuration);
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        builder.Host.UseSerilog();
         builder.Services.AddInfrastructureService(builder.Configuration);
         builder.Services.AddApplicationService();
+        builder.Services.AddRateLimiterService();
         builder.Services.AddWebUIService();
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtSetting(builder.Configuration);
-       
         builder.Services.AddLazyCache();
         
         var app = builder.Build();
@@ -32,6 +35,9 @@ public class Program
                 c.DisplayRequestDuration();
             });
         }
+        app.UseFileServer();
+        app.UseStaticFiles();
+        app.UseDefaultFiles();
         app.UseHttpsRedirection();
         app.UseGlobalExceptionMiddleware();
         app.UseAuthorization();

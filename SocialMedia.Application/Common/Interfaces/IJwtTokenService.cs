@@ -2,8 +2,8 @@
 namespace SocialMedia.Application.Common.Interfaces;
 public interface IJwtTokenService
 {
-    ValueTask<TokenResponse> CreateTokenAsync(UserLoginCommand userLogin); 
-    ValueTask<string> GenerateRefreshTokenAsync(UserLoginCommand userLogin);
+    ValueTask<TokenResponse> CreateTokenAsync(string userName); 
+    ValueTask<string> GenerateRefreshTokenAsync(string userName);
     ValueTask<ClaimsPrincipal> GetPrincipalFromExpiredToken(string token);
 
 }

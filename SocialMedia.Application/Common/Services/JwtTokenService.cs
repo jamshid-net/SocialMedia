@@ -12,11 +12,11 @@ public class JwtTokenService : IJwtTokenService
 
 
 
-    public async ValueTask<TokenResponse> CreateTokenAsync(UserLoginCommand userLogin)
+    public async ValueTask<TokenResponse> CreateTokenAsync(string _UserName)
     {
-        var foundUser = await _mediatr.Send(new GetByUserNameQuery() { UserName = userLogin.UserName });
+        var foundUser = await _mediatr.Send(new GetByUserNameQuery() { UserName = _UserName });
         if (foundUser is null)
-            throw new NotFoundException(nameof(UserLoginCommand), userLogin.UserName);
+            throw new NotFoundException(nameof(UserLoginCommand), _UserName);
         List<Claim> claims = new List<Claim>()
         {
             new Claim(ClaimTypes.Name, foundUser.UserName)
@@ -49,14 +49,14 @@ public class JwtTokenService : IJwtTokenService
         return new TokenResponse()
         {
             AccessToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
-            RefreshToken = await GenerateRefreshTokenAsync(userLogin)
+            RefreshToken = await GenerateRefreshTokenAsync(_UserName)
         };
 
     }
 
-    public async ValueTask<string> GenerateRefreshTokenAsync(UserLoginCommand userLogin)
+    public async ValueTask<string> GenerateRefreshTokenAsync(string userName)
     {
-        string randomToken = await _hashStringService.GetHashStringAsync(userLogin.UserName + DateTime.UtcNow.ToString());
+        string randomToken = await _hashStringService.GetHashStringAsync(userName + DateTime.UtcNow.ToString());
         return randomToken;
     }
 

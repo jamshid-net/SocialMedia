@@ -17,12 +17,17 @@ public class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, TokenRe
 
     public async Task<TokenResponse> Handle(UserLoginCommand request, CancellationToken cancellationToken)
     {
+        
+        var userAuthen = await _userRefreshTokenService.AuthenAsync(request);
+        if (userAuthen is false)
+            throw new NotFoundException(nameof(User), request.UserName);
+
         int time = 5;
         if (int.TryParse(_configuration.GetValue<string>("JWT:RefreshTokenExpiresTime"), out int t))
         {
             time = t;
         }
-        var TokenResponsemodel =  await  _jwtTokenService.CreateTokenAsync(request);
+        var TokenResponsemodel =  await  _jwtTokenService.CreateTokenAsync(request.UserName);
 
         var userReshreshToken = new UserRefreshToken
         {
