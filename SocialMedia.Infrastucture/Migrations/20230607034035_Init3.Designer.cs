@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SocialMedia.Infrastucture.Persistence;
@@ -11,9 +12,11 @@ using SocialMedia.Infrastucture.Persistence;
 namespace SocialMedia.Infrastucture.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230607034035_Init3")]
+    partial class Init3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,6 +77,9 @@ namespace SocialMedia.Infrastucture.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("InnerCommentId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTimeOffset?>("LastModified")
                         .HasColumnType("timestamp with time zone");
 
@@ -83,16 +89,13 @@ namespace SocialMedia.Infrastucture.Migrations
                     b.Property<Guid?>("PostId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ReplyCommnetId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("PostId");
+                    b.HasIndex("InnerCommentId");
 
-                    b.HasIndex("ReplyCommnetId");
+                    b.HasIndex("PostId");
 
                     b.ToTable("Comments");
                 });
@@ -257,7 +260,7 @@ namespace SocialMedia.Infrastucture.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserRefreshTokens");
+                    b.ToTable("UserRefreshToken");
                 });
 
             modelBuilder.Entity("PermissionRole", b =>
@@ -296,19 +299,19 @@ namespace SocialMedia.Infrastucture.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("AuthorId");
 
+                    b.HasOne("SocialMedia.Domain.Entities.Comment", "InnerComment")
+                        .WithMany()
+                        .HasForeignKey("InnerCommentId");
+
                     b.HasOne("SocialMedia.Domain.Entities.Post", "Post")
                         .WithMany()
                         .HasForeignKey("PostId");
 
-                    b.HasOne("SocialMedia.Domain.Entities.Comment", "ReplyCommnet")
-                        .WithMany()
-                        .HasForeignKey("ReplyCommnetId");
-
                     b.Navigation("Author");
 
-                    b.Navigation("Post");
+                    b.Navigation("InnerComment");
 
-                    b.Navigation("ReplyCommnet");
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("SocialMedia.Domain.Entities.Post", b =>

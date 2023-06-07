@@ -25,4 +25,7 @@ global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using System.Security;
 global using SocialMedia.Application.Users.Login;
 global using System.Security.Claims;
-global using Microsoft.Extensions.Caching.Distributed;
+global using Microsoft.Extensions.Caching.Distributed; 
+global using SocialMedia.Application.Users.Queries;
+global using System.IdentityModel.Tokens.Jwt;
+global using SocialMedia.Domain.Token;

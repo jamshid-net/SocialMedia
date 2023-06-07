@@ -11,23 +11,24 @@ public class RemoveLazyCacheAttribute : ActionFilterAttribute
         _cache = context.HttpContext.RequestServices.GetRequiredService<IAppCache>();
 
 
-        if (context.HttpContext.Request.Path == "/api/User/getall")
-            key = _configuration.GetValue<string>("LazyCache:UserKey");
 
-        if (context.HttpContext.Request.Path == "/api/Role/getall")
-            key = _configuration.GetValue<string>("LazyCache:RoleKey");
+        //if (context.HttpContext.Request.Path ==  "/api/User/create")
+        //    key = _configuration.GetValue<string>("LazyCache:UserKey");
 
-        if (context.HttpContext.Request.Path == "/api/Comment/getall")
-            key = _configuration.GetValue<string>("LazyCache:CommentKey");
+        //if (context.HttpContext.Request.Path == "/api/Login/getall")
+        //    key = _configuration.GetValue<string>("LazyCache:RoleKey");
 
-        if (context.HttpContext.Request.Path == "/api/Post/getall")
-            key = _configuration.GetValue<string>("LazyCache:PostKey");
+        //if (context.HttpContext.Request.Path == "/api/Comment/create")
+        //    key = _configuration.GetValue<string>("LazyCache:CommentKey");
 
-        if (context.HttpContext.Request.Path == "/api/Permission/getall")
-            key = _configuration.GetValue<string>("LazyCache:PermissionKey");
+        //if (context.HttpContext.Request.Path == "/api/Post/getall")
+        //    key = _configuration.GetValue<string>("LazyCache:PostKey");
+
+        //if (context.HttpContext.Request.Path == "/api/Permission/getall")
+        //    key = _configuration.GetValue<string>("LazyCache:PermissionKey");
 
         
-        _cache.Remove(key);
+        //_cache.Remove(key);
         await next();
 
     }

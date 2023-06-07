@@ -1,8 +1,11 @@
-﻿namespace SocialMedia.WebUI.Controllers;
+﻿using SocialMedia.Application.Users.Login;
+
+namespace SocialMedia.WebUI.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class LoginController : ApiBaseController
 {
-    //[HttpPost]
-    //public async ValueTask<IActionResult> Login([FromForm] )
+    [HttpPost("login")]
+    public async ValueTask<IActionResult> Login([FromForm] UserLoginCommand userLoginCommand)
+          => Ok(await _mediatr.Send(userLoginCommand));
 }

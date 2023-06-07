@@ -9,6 +9,17 @@
 // builder.Services.AddResponseCaching();
 // builder.Services.AddOutputCache();
 //app.UseOutputCache();
+
+ //builder.Services.AddStackExchangeRedisCache(options =>
+        //{
+            
+        //    options.Configuration = builder.Configuration.GetConnectionString("RedisDB");
+        //});
+
+//app.UseResponseLoggerMiddleware();
+
+
+
 ------------------------
 
 

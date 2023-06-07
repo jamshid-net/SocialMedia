@@ -12,11 +12,11 @@ public static class JwtTokenSettings
                 ValidateAudience = true,
                 ValidateIssuer = true,
                 ValidateLifetime = true,
-                ValidAudience = configuration.GetRequiredSection("JWT:Audience").Value,
-                ValidIssuer = configuration.GetRequiredSection("JWT:Issuer").Value,
+                ValidAudience = configuration.GetValue<string>("JWT:Audience"),
+                ValidIssuer = configuration.GetValue<string>("JWT:Issuer"),
                 ClockSkew = TimeSpan.Zero,
                 IssuerSigningKey = new SymmetricSecurityKey
-                                   (Encoding.UTF8.GetBytes(configuration.GetRequiredSection("JWT:Key").Value))
+                                   (Encoding.UTF8.GetBytes(configuration.GetValue<string>("JWT:Key")))
 
             };
             cfg.Events = new JwtBearerEvents()
