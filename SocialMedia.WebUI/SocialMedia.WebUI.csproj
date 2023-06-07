@@ -29,6 +29,9 @@
 
   <ItemGroup>
     <Folder Include="Filters\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\pages\" />
   </ItemGroup>
 
 </Project>

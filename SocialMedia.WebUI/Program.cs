@@ -35,6 +35,9 @@ public class Program
                 c.DisplayRequestDuration();
             });
         }
+        app.UseFileServer();
+        app.UseStaticFiles();
+        app.UseDefaultFiles();
         app.UseHttpsRedirection();
         app.UseGlobalExceptionMiddleware();
         app.UseAuthorization();

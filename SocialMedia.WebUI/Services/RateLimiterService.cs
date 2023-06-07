@@ -6,6 +6,14 @@ public static class RateLimiterService
     {
         services.AddRateLimiter(options =>
         {
+
+            options.AddFixedWindowLimiter("Api", options =>
+            {
+                options.AutoReplenishment = true;
+                options.PermitLimit = 5;
+                options.Window = TimeSpan.FromSeconds(10);
+
+            });
             options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
             {
                 return RateLimitPartition.GetFixedWindowLimiter(partitionKey: httpContext.Request.Headers.Host.ToString(),
@@ -13,7 +21,7 @@ public static class RateLimiterService
                     new FixedWindowRateLimiterOptions
                     {
                         QueueLimit = 3,
-                        PermitLimit = 6,
+                        PermitLimit = 10,
                         AutoReplenishment = true,
                         Window = TimeSpan.FromSeconds(10),
 

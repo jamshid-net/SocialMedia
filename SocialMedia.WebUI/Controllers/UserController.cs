@@ -30,7 +30,7 @@ public class UserController : ApiBaseController
 
 
 
-    
+    [EnableRateLimiting("Api")]
     [AddLazyCache]
     [HttpGet("getall")]
     public async ValueTask<IActionResult> GetAllUser()
