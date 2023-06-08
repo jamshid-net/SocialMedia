@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.RateLimiting;
-
+﻿
 namespace SocialMedia.WebUI.Services;
 
 public static class RateLimiterService
@@ -10,6 +9,7 @@ public static class RateLimiterService
         {
             options.AddConcurrencyLimiter("ConcurrencyLimiter", options =>
             {
+                
                 options.QueueLimit = 10;
                 options.PermitLimit = 10;
                 options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
