@@ -1,4 +1,6 @@
-﻿namespace SocialMedia.Application;
+﻿using SocialMedia.Application.Common.Behaviors;
+
+namespace SocialMedia.Application;
 public static class ConfigureServices
 {
     
@@ -11,7 +13,8 @@ public static class ConfigureServices
         services.AddMediatR(option =>
         {
             option.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-       
+            option.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehaivor<,>));
+
 
         });
         services.AddScoped<IUserRefreshTokenService, UserRefreshTokenService>();

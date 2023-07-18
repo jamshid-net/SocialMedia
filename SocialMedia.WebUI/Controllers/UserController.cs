@@ -31,14 +31,14 @@ public class UserController : ApiBaseController
 
 
    
-    [AddLazyCache]
+    //[AddLazyCache]
     [HttpGet("getall")]
     [EnableRateLimiting("SlidingLimiter")]
   
     public async ValueTask<IActionResult> GetAllUser()
         => Ok(await _mediatr.Send(new GetAllUsersQuery()));
 
-    [AddLazyCache]
+    //[AddLazyCache]
     [HttpGet("getById")]
     public async ValueTask<IActionResult> GetByIdUser([FromQuery] GetByIdUserQuery command)
           => Ok(await _mediatr.Send(command));

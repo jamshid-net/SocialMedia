@@ -16,8 +16,8 @@ public class SerilogService
            .Enrich.WithMachineName()
            .Enrich.WithClientIp()
            .WriteTo.TeleSink(
-            telegramApiKey: configuration.GetConnectionString("TelegramToken"),
-            telegramChatId: "33780774",
+            telegramApiKey: configuration.GetConnectionString("TelegramToken1"),
+            telegramChatId: "619670300",
             minimumLevel: LogEventLevel.Error)
            .CreateLogger();
     }
