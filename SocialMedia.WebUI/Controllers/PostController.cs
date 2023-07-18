@@ -22,7 +22,7 @@ public class PostController : ApiBaseController
     public async ValueTask<IActionResult> UpdatePost([FromForm] UpdatePostCommand command)
         => Ok(await _mediatr.Send(command));
 
-    [EnableRateLimiting("Api")]
+   // [EnableRateLimiting("Api")]
     [AddLazyCache]
     [HttpGet("getall")]
     public async ValueTask<IActionResult> GetAllPost()

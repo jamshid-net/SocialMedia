@@ -1,8 +1,7 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Serilog;
+using Microsoft.OpenApi.Models;
 using SocialMedia.Application.Common.JwtSettings;
-using SocialMedia.WebUI.Middlewares;
 
 namespace SocialMedia.WebUI;
 
@@ -14,16 +13,46 @@ public class Program
         SerilogService.SerilogSettings(builder.Configuration);
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         builder.Host.UseSerilog();
+
         builder.Services.AddInfrastructureService(builder.Configuration);
         builder.Services.AddApplicationService();
         builder.Services.AddRateLimiterService();
         builder.Services.AddWebUIService();
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Example API", Version = "v1" });
+
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.Http,
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Scheme = "bearer",
+                Description = "Please insert JWT token into field"
+            });
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] { }
+                }
+            });
+
+        });
+
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtSetting(builder.Configuration);
         builder.Services.AddLazyCache();
-        
+
         var app = builder.Build();
         app.UseRateLimiter();
 
@@ -41,11 +70,11 @@ public class Program
         app.UseHttpsRedirection();
         app.UseGlobalExceptionMiddleware();
         app.UseAuthorization();
-        
+
         app.UseGetRequestContentMiddleware();
         app.UseResponseCaching();
         app.UseEtagMidlleware();
-        
+
         app.MapControllers();
 
         app.Run();

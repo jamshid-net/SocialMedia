@@ -12,8 +12,13 @@ public class RemoveLazyCacheAttribute : ActionFilterAttribute
 
 
 
-        //if (context.HttpContext.Request.Path ==  "/api/User/create")
-        //    key = _configuration.GetValue<string>("LazyCache:UserKey");
+        if (context.HttpContext.Request.Path == "/api/User/create")
+            key = _configuration.GetValue<string>("LazyCache:UserKey");
+        if (context.HttpContext.Request.Path == "/api/User/update")
+            key = _configuration.GetValue<string>("LazyCache:UserKey");
+        if (context.HttpContext.Request.Path == "/api/User/delete")
+            key = _configuration.GetValue<string>("LazyCache:UserKey");
+
 
         //if (context.HttpContext.Request.Path == "/api/Login/getall")
         //    key = _configuration.GetValue<string>("LazyCache:RoleKey");
@@ -27,8 +32,8 @@ public class RemoveLazyCacheAttribute : ActionFilterAttribute
         //if (context.HttpContext.Request.Path == "/api/Permission/getall")
         //    key = _configuration.GetValue<string>("LazyCache:PermissionKey");
 
-        
-        //_cache.Remove(key);
+
+        _cache.Remove(key);
         await next();
 
     }
