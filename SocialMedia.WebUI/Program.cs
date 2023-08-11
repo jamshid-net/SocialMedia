@@ -80,10 +80,10 @@ public class Program
         app.UseGetRequestContentMiddleware();
         app.UseResponseCaching();
         app.UseEtagMidlleware();
-
+       
         app.MapGraphQL();
         app.MapControllers();
-
+      
         app.Run();
     }
 }

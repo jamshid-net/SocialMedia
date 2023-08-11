@@ -15,15 +15,15 @@ public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand,
     
     public async Task<Guid> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
     {
-       
+        Guid testUserId = Guid.Parse("2f71e502-edc4-4c66-bcb2-1a995594114a");
         var entity = new Comment
         {
             Id = Guid.NewGuid(),
             CommentText = request.CommentText,
-            AuthorId = _currentUserService.UserId,
+            AuthorId = testUserId,
             PostId = request.PostId,
             CreatedAt = DateTimeOffset.UtcNow,
-            CreatedBy = _currentUserService.UserName
+            CreatedBy = "Jamshid"
             
         };
         await _context.Comments.AddAsync(entity, cancellationToken);
