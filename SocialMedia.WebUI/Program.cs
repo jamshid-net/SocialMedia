@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using SocialMedia.Application.Common.JwtSettings;
+using SocialMedia.WebUI.GrpahqlServices;
 
 namespace SocialMedia.WebUI;
 
@@ -14,6 +15,7 @@ public class Program
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         builder.Host.UseSerilog();
 
+       
         builder.Services.AddInfrastructureService(builder.Configuration);
         builder.Services.AddApplicationService();
         builder.Services.AddRateLimiterService();
@@ -53,6 +55,10 @@ public class Program
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtSetting(builder.Configuration);
         builder.Services.AddLazyCache();
 
+
+        builder.Services.AddGraphqlServices();
+
+
         var app = builder.Build();
         app.UseRateLimiter();
 
@@ -75,6 +81,7 @@ public class Program
         app.UseResponseCaching();
         app.UseEtagMidlleware();
 
+        app.MapGraphQL();
         app.MapControllers();
 
         app.Run();
