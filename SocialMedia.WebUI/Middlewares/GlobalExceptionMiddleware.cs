@@ -23,7 +23,7 @@ public class GlobalExceptionMiddleware
            
             await _next(httpContext);
             // Log.Error("EXCEPTION:🔴 CLIENT_IP:{ClientIp}  CLIENT:{EnvironmentUserName}  MACHINENAME:{MachineName } AGENT:{ClientAgent}" + $"\nDatetime:{DateTime.Now} | Message:{exMessage} | Path:{httpContext.Request.Path}");
-            Log.Error("EXCEPTION:🔴 CLIENT_IP:{ClientIp}  CLIENT:{ERROR} ELYOR AHAHAHA AHAHAHAH  MACHINENAME:{ } AGENT:{}" + $"\nDatetime:{DateTime.Now} | Path:{httpContext.Request.Path}");
+           // Log.Error("EXCEPTION:🔴 CLIENT_IP:{ClientIp}  CLIENT:{ERROR} ELYOR AHAHAHA AHAHAHAH  MACHINENAME:{ } AGENT:{}" + $"\nDatetime:{DateTime.Now} | Path:{httpContext.Request.Path}");
         }
         catch (NotFoundException ex)
         {
