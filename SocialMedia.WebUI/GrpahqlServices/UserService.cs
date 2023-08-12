@@ -1,5 +1,5 @@
 ﻿namespace SocialMedia.WebUI.GrpahqlServices;
-
+[ExtendObjectType("Query")]
 public class UserService
 {
     public async ValueTask<Guid> CreateUser([Service]ISender _mediatr, CreateUserCommand command)

@@ -4,12 +4,14 @@ public static class GraphqlConfiguration
 {
     public static IServiceCollection AddGraphqlServices(this IServiceCollection services)
     {
-        services.AddGraphQLServer().AddQueryType<CommentService>();
-        //services.AddGraphQLServer().AddQueryType<LoginService>();
-        //services.AddGraphQLServer().AddQueryType<PermissionService>();
-        //services.AddGraphQLServer().AddQueryType<PostService>();
-        //services.AddGraphQLServer().AddQueryType<RoleService>();
-        //services.AddGraphQLServer().AddQueryType<UserService>();
+        services.AddGraphQLServer().AddQueryType(x => x.Name("Query"))
+            .AddType<CommentService>()
+            .AddType<LoginService>()
+            .AddType<LoginService>()
+            .AddType<PermissionService>()
+            .AddType<PostService>()
+            .AddType<RoleService>()
+            .AddType<UserService>();
         return services;
     }
 }
