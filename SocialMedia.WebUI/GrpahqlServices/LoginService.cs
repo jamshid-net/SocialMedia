@@ -1,5 +1,7 @@
 ﻿namespace SocialMedia.WebUI.GrpahqlServices;
 
+
+[ExtendObjectType("Query")]
 public class LoginService
 {
     public async ValueTask<TokenResponse> Login([Service] ISender _mediatr, UserLoginCommand command)

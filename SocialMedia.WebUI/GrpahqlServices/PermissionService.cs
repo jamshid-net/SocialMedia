@@ -1,5 +1,5 @@
 ﻿namespace SocialMedia.WebUI.GrpahqlServices;
-
+[ExtendObjectType("Query")]
 public class PermissionService
 {
     public async ValueTask<Guid> CreatePermission([Service]ISender _mediatr, CreatePermissionCommand command)

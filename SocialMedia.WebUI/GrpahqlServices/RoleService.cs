@@ -1,5 +1,5 @@
 ﻿namespace SocialMedia.WebUI.GrpahqlServices;
-
+[ExtendObjectType("Query")]
 public class RoleService
 {
 

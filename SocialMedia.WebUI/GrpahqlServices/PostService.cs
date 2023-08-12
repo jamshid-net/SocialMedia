@@ -1,5 +1,5 @@
 ﻿namespace SocialMedia.WebUI.GrpahqlServices;
-
+[ExtendObjectType("Query")]
 public class PostService
 {
     public async ValueTask<Guid> CreatePost([Service]ISender _mediatr, CreatePostCommand command)

@@ -1,5 +1,7 @@
 ﻿namespace SocialMedia.WebUI.GrpahqlServices;
 
+
+[ExtendObjectType("Query")]
 public class CommentService
 {
     public async ValueTask<CommentGetDto> ReplyComment([Service] ISender _mediatr,ReplyMessageCommentCommand command)
