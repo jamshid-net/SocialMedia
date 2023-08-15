@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
+using System.Diagnostics;
 using System.Web;
 
 namespace SocialMedia.Application.Users.Queries;
@@ -20,6 +21,8 @@ public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, List<Us
 
     public async Task<List<UserGetDto>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
     {
+        
+
         var entities =await _context.Users.ToListAsync(cancellationToken);
         var result = _mapper.Map<List<UserGetDto>>(entities);
         foreach (var entity in result)

@@ -1,7 +1,9 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.OpenApi.Models;
 using SocialMedia.Application.Common.JwtSettings;
+using SocialMedia.WebUI.Filters;
 using SocialMedia.WebUI.GrpahqlServices;
 
 namespace SocialMedia.WebUI;
@@ -15,7 +17,7 @@ public class Program
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         builder.Host.UseSerilog();
 
-       
+
         builder.Services.AddInfrastructureService(builder.Configuration);
         builder.Services.AddApplicationService();
         builder.Services.AddRateLimiterService();
@@ -74,16 +76,32 @@ public class Program
         app.UseStaticFiles();
         app.UseDefaultFiles();
         app.UseHttpsRedirection();
+
         app.UseGlobalExceptionMiddleware();
+
+        app.UseRouting();
+
+        app.UseAuthentication();
         app.UseAuthorization();
+
+
 
         app.UseGetRequestContentMiddleware();
         app.UseResponseCaching();
         app.UseEtagMidlleware();
-       
         app.MapGraphQL();
         app.MapControllers();
-      
+
+        app.MapControllerRoute(
+
+            name: "default",
+           pattern: "{controller=User}/{action=getalluser}");
+
+
+
+        app.MapGet("/routes", (IEnumerable<EndpointDataSource> endpointSources) =>
+          string.Join("\n", endpointSources.SelectMany(source => source.Endpoints)));
+
         app.Run();
     }
 }
