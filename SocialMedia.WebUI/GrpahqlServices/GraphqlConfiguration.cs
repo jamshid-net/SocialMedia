@@ -1,10 +1,12 @@
-﻿namespace SocialMedia.WebUI.GrpahqlServices;
+﻿
+
+namespace SocialMedia.WebUI.GrpahqlServices;
 
 public static class GraphqlConfiguration
 {
     public static IServiceCollection AddGraphqlServices(this IServiceCollection services)
     {
-        services.AddGraphQLServer().AddQueryType(x => x.Name("Query"))
+        services.AddGraphQLServer().RegisterService<ISender>().AddQueryType(x => x.Name("Query"))
             .AddType<CommentService>()
             .AddType<LoginService>()
             .AddType<LoginService>()
@@ -12,6 +14,8 @@ public static class GraphqlConfiguration
             .AddType<PostService>()
             .AddType<RoleService>()
             .AddType<UserService>();
+
+
         return services;
     }
 }

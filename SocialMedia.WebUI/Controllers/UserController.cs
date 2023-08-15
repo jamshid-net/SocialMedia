@@ -1,4 +1,6 @@
 ﻿
+using SocialMedia.WebUI.Filters;
+
 namespace SocialMedia.WebUI.Controllers;
 [Route("api/[controller]")]
 [ApiController]
@@ -32,9 +34,9 @@ public class UserController : ApiBaseController
 
    
     //[AddLazyCache]
-    [HttpGet("getall")]
+    [HttpGet("getalluser")]
     [EnableRateLimiting("SlidingLimiter")]
-  
+    [UserTestFilter]
     public async ValueTask<IActionResult> GetAllUser()
         => Ok(await _mediatr.Send(new GetAllUsersQuery()));
 
